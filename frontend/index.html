@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172554">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <p class="eyebrow">FULL-STACK LEARNING PROJECT</p>
+      <h1>Task Manager</h1>
+      <p class="subtitle">A small app powered by a frontend, an API, and Docker Compose.</p>
+      <div class="status"><span class="status-dot"></span><span id="api-status">Checking API connection…</span></div>
+    </header>
+
+    <section class="panel" aria-labelledby="add-heading">
+      <h2 id="add-heading">Add a task</h2>
+      <form id="task-form">
+        <label class="sr-only" for="task-title">Task title</label>
+        <input id="task-title" name="title" maxlength="120" placeholder="e.g. Learn Docker networking" required>
+        <button type="submit">Add task</button>
+      </form>
+      <p id="message" class="message" role="status"></p>
+    </section>
+
+    <section class="task-section" aria-labelledby="tasks-heading">
+      <div class="section-heading">
+        <div>
+          <h2 id="tasks-heading">Your tasks</h2>
+          <p class="muted">Check off work as you finish it.</p>
+        </div>
+        <span id="task-count" class="count">0 tasks</span>
+      </div>
+      <ul id="task-list" class="task-list"></ul>
+      <p id="empty-state" class="empty" hidden>No tasks yet. Add one above to get started.</p>
+    </section>
+
+    <footer>Frontend → Nginx → Express API · Docker Compose</footer>
+  </main>
+</body>
+</html>
