@@ -1,0 +1,45 @@
+
+name: OWASP Dependency Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-scan:
+    name: Scan Dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run OWASP dep-scan
+        run: |
+          mkdir -p "$RUNNER_TEMP/depscan-reports"
+
+          docker run --rm \
+            -v "$GITHUB_WORKSPACE:/app" \
+            -v "$RUNNER_TEMP/depscan-reports:/reports" \
+            ghcr.io/owasp-dep-scan/dep-scan \
+            depscan \
+              --src /app \
+              --reports-dir /reports \
+              --vdb-scope app
+
+      - name: Upload scan reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: owasp-dep-scan-reports
+          path: ${{ runner.temp }}/depscan-reports/
+          if-no-files-found: warn
+          retention-days: 14
